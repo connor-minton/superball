@@ -23,8 +23,8 @@ export default function Grid({colors, selected, onClick}) {
   }
 
   return (
-    <div>
+    <>
       {rows}
-    </div>
+    </>
   );
 };

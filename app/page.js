@@ -8,7 +8,7 @@ import NoSSRWrapper from './ui/NoSSRWrapper';
 export default function Home() {
   return (
     <NoSSRWrapper>
-      <div>Hello world.</div>
+      <h1 style={{textAlign: 'center'}}>Superball</h1>
       <Superball />
     </NoSSRWrapper>
   );

@@ -8,6 +8,8 @@ import Controls from './Controls';
 
 import * as sb from '../lib/superball';
 
+import styles from './Superball.module.css';
+
 const firstBoard = Array(80).fill('-');
 sb.addColors(firstBoard, 5);
 
@@ -54,10 +56,19 @@ export default function Superball() {
   }
 
   return (
-    <>
-      <Grid colors={colors} selected={selected} onClick={handleClick} />
-      <Status score={score} isGameOver={gameOver} />
-      <Controls collectable={collectable.length > 0} onCollectClick={handleCollectClick} />
-    </>
+    <div className={styles.container}>
+      <div style={{width:'350px'}}></div>
+      <div className={styles.grid}>
+        <Grid colors={colors} selected={selected} onClick={handleClick} />
+      </div>
+      <div className={styles.sidebar}>
+        <div className={styles.status}>
+          <Status score={score} isGameOver={gameOver} />
+        </div>
+        <div className={styles.controls}>
+          <Controls collectable={collectable.length > 0} onCollectClick={handleCollectClick} />
+        </div>
+      </div>
+    </div>
   );
 };

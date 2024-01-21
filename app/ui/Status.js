@@ -1,10 +1,12 @@
 'use client';
 
+import styles from './Status.module.css';
+
 export default function Status({score, isGameOver}) {
   return (
-    <div>
-      <p>{isGameOver ? 'Game Over' : <span>&nbsp;</span>}</p>
-      <p>Score: {score}</p>
-    </div>
+    <>
+      <p className={styles.status}>{isGameOver ? 'Game Over' : <span>&nbsp;</span>}</p>
+      <p className={styles.score}>{score}</p>
+    </>
   );
 };

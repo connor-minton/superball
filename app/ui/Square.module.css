@@ -33,8 +33,8 @@
 }
 
 .gray {
-  background: rgb(224, 224, 224);
-  border-color: rgb(224, 224, 224);
+  background: rgb(68, 68, 68);
+  border-color: rgb(68, 68, 68);
 }
 
 .selected {
@@ -42,5 +42,5 @@
 }
 
 .goal {
-  border-color: black;
+  border-color: #999999;
 }
