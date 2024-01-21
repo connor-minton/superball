@@ -1,0 +1,46 @@
+.square {
+  border-radius: 0;
+  border: 5px solid;
+  height: 50px;
+  width: 50px;
+  margin: 5px 5px;
+  padding: 0;
+}
+
+.purple {
+  background: var(--sb-purple);
+  border-color: var(--sb-purple);
+}
+
+.blue {
+  background: var(--sb-blue);
+  border-color: var(--sb-blue);
+}
+
+.yellow {
+  background: var(--sb-yellow);
+  border-color: var(--sb-yellow);
+}
+
+.red {
+  background: var(--sb-red);
+  border-color: var(--sb-red);
+}
+
+.green {
+  background: var(--sb-green);
+  border-color: var(--sb-green);
+}
+
+.gray {
+  background: rgb(224, 224, 224);
+  border-color: rgb(224, 224, 224);
+}
+
+.selected {
+  border-color: rgb(218, 218, 2);
+}
+
+.goal {
+  border-color: black;
+}
