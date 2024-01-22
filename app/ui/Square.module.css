@@ -44,3 +44,18 @@
 .goal {
   border-color: #999999;
 }
+
+@media (max-width: 1000px) {
+  .square {
+    height: 30px;
+    width: 30px;
+  }
+}
+
+@media (max-width: 400px) {
+  .square {
+    height: 25px;
+    width: 25px;
+    margin: 2px 2px;
+  }
+}

@@ -11,3 +11,22 @@
 .highScore {
   font-size: 16px;
 }
+
+@media (max-width: 1000px) {
+  .score {
+    margin: 0;
+    width: 250px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .score {
+    text-align: right;
+  }
+
+  .status {
+    position: absolute;
+    top: 450px;
+  }
+}

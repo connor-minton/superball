@@ -12,3 +12,9 @@
   color: gray;
   cursor: not-allowed;
 }
+
+@media (max-width: 1000px) {
+  .collect {
+    font-size: 24px;
+  }
+}

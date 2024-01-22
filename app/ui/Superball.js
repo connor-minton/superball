@@ -66,11 +66,14 @@ export default function Superball() {
 
   return (
     <div className={styles.container}>
-      <div style={{width:'350px'}}></div>
+      <div className={styles.fakesidebar}></div>
       <div className={styles.grid}>
         <Grid colors={colors} selected={selected} onClick={handleClick} />
       </div>
       <div className={styles.sidebar}>
+        <div className={styles.mobileControls}>
+          <Controls collectable={collectable.length > 0} onCollectClick={handleCollectClick} />
+        </div>
         <div className={styles.status}>
           <Status score={score} highScore={highScore} isGameOver={gameOver} />
         </div>
