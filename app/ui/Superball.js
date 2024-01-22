@@ -20,6 +20,11 @@ export default function Superball() {
   const [gameOver, setGameOver] = useState(false);
 
   const collectable = sb.collectable(colors, selected);
+  let highScore = localStorage.getItem('highScore');
+  if (highScore == null) {
+    highScore = 0;
+    localStorage.setItem('highScore', 0);
+  }
 
   function handleClick(id) {
     if (colors[id] === '-' || gameOver)
@@ -35,8 +40,12 @@ export default function Superball() {
       newColors[id] = colors[selected];
       newColors[selected] = colors[id];
       const couldAdd = sb.addColors(newColors, 5);
-      if (!couldAdd)
+      if (!couldAdd) {
         setGameOver(true);
+        if (score > highScore) {
+          localStorage.setItem('highScore', score);
+        }
+      }
       setColors(newColors);
       setSelected(-1);
     }
@@ -63,7 +72,7 @@ export default function Superball() {
       </div>
       <div className={styles.sidebar}>
         <div className={styles.status}>
-          <Status score={score} isGameOver={gameOver} />
+          <Status score={score} highScore={highScore} isGameOver={gameOver} />
         </div>
         <div className={styles.controls}>
           <Controls collectable={collectable.length > 0} onCollectClick={handleCollectClick} />
