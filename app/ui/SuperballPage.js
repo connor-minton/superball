@@ -23,6 +23,15 @@ export default function Home() {
   }
 
   function handleCollectClick() {
+    if (gameOver) {
+      setScore(0);
+      setGameOver(false);
+      const newBoard = Array(80).fill('-');
+      sb.addColors(newBoard, 5);
+      setColors(newBoard);
+      return;
+    }
+
     setScore(score + collectable.length * sb.colorPoints(colors[selected]));
     const newColors = colors.slice();
     for (let square of collectable) {

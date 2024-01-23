@@ -21,13 +21,13 @@ export default function Superball({selected, handleSquareClick, handleCollectCli
       </div>
       <div className={styles.sidebar}>
         <div className={styles.mobileControls}>
-          <Controls collectable={collectable.length > 0} onCollectClick={handleCollectClick} />
+          <Controls collectable={collectable.length > 0} onCollectClick={handleCollectClick} isGameOver={gameOver}/>
         </div>
         <div className={styles.status}>
           <Status score={score} highScore={highScore} isGameOver={gameOver} />
         </div>
         <div className={styles.controls}>
-          <Controls collectable={collectable.length > 0} onCollectClick={handleCollectClick} />
+          <Controls collectable={collectable.length > 0} onCollectClick={handleCollectClick} isGameOver={gameOver}/>
         </div>
       </div>
     </div>
