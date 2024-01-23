@@ -21,7 +21,7 @@ export default function Square({color, selected, goal, onClick}) {
   return (
     <button
       className={classes.join(' ')}
-      onClick={onClick}
+      onClick={e => {e.stopPropagation(); onClick();}}
     >
     </button>
   );
