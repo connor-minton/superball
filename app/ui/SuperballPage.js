@@ -65,7 +65,7 @@ export default function Home() {
   }
 
   return (
-    <div style={{height:'100%', width:'100%'}} onClick={handleOtherClick}>
+    <div style={{height:'100vh', width:'100vw'}} onClick={handleOtherClick}>
       <h1 style={{textAlign: 'center'}}>Superball</h1>
       <Superball
         handleSquareClick={handleSquareClick}

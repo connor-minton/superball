@@ -32,30 +32,27 @@
   .container {
     flex-direction: column
   }
+
   .sidebar {
     width: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    margin: 10px 0;
   }
+
   .status {
     display: flex;
     justify-content: center;
+    flex-direction: column;
   }
-}
 
-@media (max-width: 400px) {
   .mobileControls {
     display: block;
   }
 
   .controls {
     display: none;
-  }
-
-  .sidebar {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 10px 0;
   }
 }
