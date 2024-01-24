@@ -1,8 +1,18 @@
 'use client';
 
+import { useRef, useEffect } from 'react';
+
 import styles from './Square.module.css';
 
 export default function Square({color, selected, goal, onClick}) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    ref.current.style.animation = 'none';
+    ref.current.offsetHeight;
+    ref.current.style.animation = null;
+  }, [color]);
+
   const colorMap = {
     p: 'purple',
     b: 'blue',
@@ -22,6 +32,7 @@ export default function Square({color, selected, goal, onClick}) {
     <button
       className={classes.join(' ')}
       onClick={e => {e.stopPropagation(); onClick();}}
+      ref={ref}
     >
     </button>
   );

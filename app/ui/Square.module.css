@@ -5,6 +5,8 @@
   width: 50px;
   margin: 5px 5px;
   padding: 0;
+  animation-name: fade-in;
+  animation-duration: 1s;
 }
 
 .purple {
@@ -58,4 +60,9 @@
     width: 8vw;
     margin: 2px 2px;
   }
+}
+
+@keyframes fade-in {
+  from {opacity: 0}
+  to {opacity: 1}
 }
