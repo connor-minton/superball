@@ -13,6 +13,7 @@ export default function Home() {
   const [colors, setColors] = useState(firstBoard);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [animating, setAnimating] = useState(false);
 
   const collectable = sb.collectable(colors, selected);
 
@@ -23,6 +24,8 @@ export default function Home() {
   }
 
   function handleCollectClick() {
+    if (animating) return;
+
     if (gameOver) {
       setScore(0);
       setGameOver(false);
@@ -37,15 +40,20 @@ export default function Home() {
     for (let square of collectable) {
       newColors[square] = '-';
     }
-    // collectable will always have 5 or more squares to collect, so the following
-    // should always succeed.
-    sb.addColors(newColors, 3);
     setColors(newColors);
     setSelected(-1);
+
+    setTimeout(() => {
+      // collectable will always have 5 or more squares to collect, so the following
+      // should always succeed.
+      const newNewColors = newColors.slice();
+      sb.addColors(newNewColors, 3);
+      setColors(newNewColors);
+    }, 500);
   }
 
   function handleSquareClick(id) {
-    if (colors[id] === '-' || gameOver)
+    if (animating || colors[id] === '-' || gameOver)
       return;
 
     if (id == selected)
@@ -57,15 +65,23 @@ export default function Home() {
       const newColors = colors.slice();
       newColors[id] = colors[selected];
       newColors[selected] = colors[id];
-      const couldAdd = sb.addColors(newColors, 5);
-      if (!couldAdd) {
-        setGameOver(true);
-        if (score > highScore) {
-          localStorage.setItem('highScore', score);
-        }
-      }
       setColors(newColors);
+      setAnimating(true);
       setSelected(-1);
+
+      // generate new colors later
+      setTimeout(() => {
+        const newNewColors = newColors.slice();
+        const couldAdd = sb.addColors(newNewColors, 5);
+        if (!couldAdd) {
+          setGameOver(true);
+          if (score > highScore) {
+            localStorage.setItem('highScore', score);
+          }
+        }
+        setAnimating(false);
+        setColors(newNewColors);
+      }, 500);
     }
   }
 
