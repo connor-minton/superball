@@ -5,10 +5,12 @@ import Superball from './Superball';
 import { useState } from 'react';
 import * as sb from '../lib/superball';
 
+import styles from './SuperballPage.module.css';
+
 const firstBoard = Array(80).fill('-');
 sb.addColors(firstBoard, 5);
 
-export default function Home() {
+export default function SuperballPage({onHelpClick}) {
   const [selected, setSelected] = useState(-1);
   const [colors, setColors] = useState(firstBoard);
   const [score, setScore] = useState(0);
@@ -91,7 +93,12 @@ export default function Home() {
 
   return (
     <div style={{height:'100vh', width:'100vw'}} onClick={handleOtherClick}>
-      <h1 style={{textAlign: 'center'}}>Superball</h1>
+      <h1 style={{textAlign: 'center'}}>
+        Superball
+        <button className={styles.helpButton} onClick={e => {e.stopPropagation(); onHelpClick();}}>
+          <i style={{fontSize: '22px'}} className="fa-solid fa-circle-info"></i>
+        </button>
+      </h1>
       <Superball
         handleSquareClick={handleSquareClick}
         selected={selected}
