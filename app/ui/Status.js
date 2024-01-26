@@ -4,7 +4,7 @@ import styles from './Status.module.css';
 
 import { useState } from 'react';
 
-export default function Status({score, highScore, isGameOver}) {
+export default function Status({score, highScore, isGameOver, glowHighScore}) {
   const [ displayScore, setDisplayScore ] = useState(score);
 
   if (displayScore > score) {
@@ -20,7 +20,7 @@ export default function Status({score, highScore, isGameOver}) {
   return (
     <>
       <p style={{display: gameOverDisplay}} className={styles.status}>{isGameOver ? 'Game Over' : <span>&nbsp;</span>}</p>
-      <p className={styles.highScore}>High Score: {highScore}</p>
+      <p className={styles.highScore}><span className={glowHighScore ? styles.glow : ''}>High Score: {highScore}</span></p>
       <p className={styles.score}>{displayScore}</p>
     </>
   );

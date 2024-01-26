@@ -10,7 +10,7 @@ import * as sb from '../lib/superball';
 
 import styles from './Superball.module.css';
 
-export default function Superball({selected, handleSquareClick, handleCollectClick, colors, score, gameOver, highScore}) {
+export default function Superball({selected, handleSquareClick, handleCollectClick, colors, score, gameOver, highScore, glowHighScore}) {
   const collectable = sb.collectable(colors, selected);
 
   return (
@@ -24,7 +24,7 @@ export default function Superball({selected, handleSquareClick, handleCollectCli
           <Controls collectable={collectable.length > 0} onCollectClick={handleCollectClick} isGameOver={gameOver}/>
         </div>
         <div className={styles.status}>
-          <Status score={score} highScore={highScore} isGameOver={gameOver} />
+          <Status score={score} highScore={highScore} isGameOver={gameOver} glowHighScore={glowHighScore} />
         </div>
         <div className={styles.controls}>
           <Controls collectable={collectable.length > 0} onCollectClick={handleCollectClick} isGameOver={gameOver}/>

@@ -7,6 +7,8 @@ import * as sb from '../lib/superball';
 
 import styles from './SuperballPage.module.css';
 
+import confetti from 'canvas-confetti';
+
 const firstBoard = Array(80).fill('-');
 sb.addColors(firstBoard, 5);
 
@@ -16,6 +18,7 @@ export default function SuperballPage({onHelpClick}) {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [animating, setAnimating] = useState(false);
+  const [glowHighScore, setGlowHighScore] = useState(false);
 
   const collectable = sb.collectable(colors, selected);
 
@@ -31,6 +34,7 @@ export default function SuperballPage({onHelpClick}) {
     if (gameOver) {
       setScore(0);
       setGameOver(false);
+      setGlowHighScore(false);
       const newBoard = Array(80).fill('-');
       sb.addColors(newBoard, 5);
       setColors(newBoard);
@@ -79,6 +83,13 @@ export default function SuperballPage({onHelpClick}) {
           setGameOver(true);
           if (score > highScore) {
             localStorage.setItem('highScore', score);
+            confetti({
+              origin: {
+                x: 0.5,
+                y: 1
+              }
+            });
+            setGlowHighScore(true);
           }
         }
         setAnimating(false);
@@ -107,6 +118,7 @@ export default function SuperballPage({onHelpClick}) {
         gameOver={gameOver}
         colors={colors}
         highScore={highScore}
+        glowHighScore={glowHighScore}
       />
     </div>
   );
