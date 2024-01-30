@@ -1,15 +1,16 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 
 import styles from './Square.module.css';
 
 export default function Square({color, selected, goal, onClick}) {
   const ref = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    // force animation to play again
     ref.current.style.animation = 'none';
-    ref.current.offsetHeight;
+    ref.current.offsetHeight; // <-- witchcraft. do not remove
     ref.current.style.animation = null;
   }, [color]);
 
