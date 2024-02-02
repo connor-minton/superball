@@ -1,6 +1,6 @@
 .square {
   border-radius: 0;
-  border: 5px solid;
+  border: 6px solid;
   height: 50px;
   width: 50px;
   margin: 5px 5px;
@@ -44,11 +44,33 @@
 }
 
 .goal {
-  border-color: #999999;
+  border-color: #b1ac97;
+  border-style: inset;
+}
+
+.goal.purple {
+  border-color: rgb(190, 80, 190);
+}
+
+.goal.blue {
+  border-color: rgb(82, 80, 190);
+}
+
+.goal.yellow {
+  border-color: rgb(190, 179, 80);
+}
+
+.goal.red {
+  border-color: rgb(182, 63, 63);
+}
+
+.goal.green {
+  border-color: rgb(63, 182, 63);
 }
 
 @media (max-width: 1000px) {
   .square {
+    border-width: 5px;
     height: 30px;
     width: 30px;
   }

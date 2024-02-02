@@ -26,7 +26,7 @@ export default function Square({color, selected, goal, onClick}) {
   const classes = [styles.square, styles[colorMap[color]]];
   if (selected)
     classes.push(styles.selected);
-  else if (goal)
+  if (goal)
     classes.push(styles.goal);
 
   return (
