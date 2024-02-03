@@ -1,9 +1,9 @@
 :root {
-  --sb-purple: rgb(219, 129, 255);
-  --sb-blue: rgb(98, 98, 255);
-  --sb-yellow: rgb(237, 237, 112);
-  --sb-red: rgb(255, 93, 93);
-  --sb-green: rgb(62, 236, 62);
+  --sb-purple: hsl(283, 100%, 75%);
+  --sb-blue: hsl(240, 100%, 69%);
+  --sb-yellow: hsl(60, 78%, 68%);
+  --sb-red: hsl(0, 100%, 68%);
+  --sb-green: hsl(120, 82%, 58%);
 }
 
 * {

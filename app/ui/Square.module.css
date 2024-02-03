@@ -35,8 +35,8 @@
 }
 
 .gray {
-  background: rgb(68, 68, 68);
-  border-color: rgb(68, 68, 68);
+  background: rgb(37, 37, 37);
+  border-color: rgb(37, 37, 37);
 }
 
 .selected {
@@ -44,28 +44,32 @@
 }
 
 .goal {
-  border-color: #b1ac97;
-  border-style: inset;
+  border-color: #494949;
 }
 
 .goal.purple {
-  border-color: rgb(190, 80, 190);
+  border-color: hsl(283, 50%, 55%);
+  border-style: inset;
 }
 
 .goal.blue {
-  border-color: rgb(82, 80, 190);
+  border-color: hsl(240, 50%, 50%);
+  border-style: inset;
 }
 
 .goal.yellow {
-  border-color: rgb(190, 179, 80);
+  border-color: hsl(60, 50%, 50%);
+  border-style: inset;
 }
 
 .goal.red {
-  border-color: rgb(182, 63, 63);
+  border-color: hsl(0,  50%, 50%);
+  border-style: inset;
 }
 
 .goal.green {
-  border-color: rgb(63, 182, 63);
+  border-color: hsl(120, 82%, 40%);
+  border-style: inset;
 }
 
 @media (max-width: 1000px) {
