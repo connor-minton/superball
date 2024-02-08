@@ -1,6 +1,8 @@
 'use client';
 
 import Superball from './Superball';
+import Modal from './Modal';
+import Leaderboards from './Leaderboards';
 
 import { useState } from 'react';
 import * as sb from '../lib/superball';
@@ -19,6 +21,7 @@ export default function SuperballPage({onHelpClick}) {
   const [gameOver, setGameOver] = useState(false);
   const [animating, setAnimating] = useState(false);
   const [glowHighScore, setGlowHighScore] = useState(false);
+  const [lbModalShown, setLbModalShown] = useState(false);
 
   const collectable = sb.collectable(colors, selected);
 
@@ -102,12 +105,22 @@ export default function SuperballPage({onHelpClick}) {
     setSelected(-1);
   }
 
+  function handleLbClick() {
+    setLbModalShown(!lbModalShown);
+  }
+
   return (
     <div style={{height:'100vh', width:'100vw'}} onClick={handleOtherClick}>
+      {lbModalShown && <Modal onClose={handleLbClick}>
+        <Leaderboards />
+      </Modal>}
       <h1 style={{textAlign: 'center'}}>
         Superball
-        <button className={styles.helpButton} onClick={e => {e.stopPropagation(); onHelpClick();}}>
+        <button className={styles.iconButton} onClick={e => {e.stopPropagation(); onHelpClick();}}>
           <i style={{fontSize: '22px'}} className="fa-solid fa-circle-info"></i>
+        </button>
+        <button className={styles.iconButton} onClick={e => {e.stopPropagation(); handleLbClick();}}>
+          <i style={{fontSize: '22px'}} className="fa-solid fa-trophy"></i>
         </button>
       </h1>
       <Superball
