@@ -4,7 +4,7 @@ import { useRef, useLayoutEffect } from 'react';
 
 import styles from './Square.module.css';
 
-export default function Square({color, selected, goal, onClick}) {
+export default function Square({color, selected, goal, onClick, glow}) {
   const ref = useRef(null);
 
   useLayoutEffect(() => {
@@ -28,6 +28,8 @@ export default function Square({color, selected, goal, onClick}) {
     classes.push(styles.selected);
   if (goal)
     classes.push(styles.goal);
+  if (glow)
+    classes.push(styles.glow);
 
   return (
     <button

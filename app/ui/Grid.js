@@ -4,6 +4,11 @@ import Square from './Square';
 import * as sb from '../lib/superball';
 
 export default function Grid({colors, selected, onClick}) {
+  let collectable = [];
+  if (selected >= 0) {
+    collectable = sb.collectable(colors, selected);
+  }
+
   const rows = [];
   for (let i = 0; i < 8; i++) {
     const row = [];
@@ -14,7 +19,8 @@ export default function Grid({colors, selected, onClick}) {
                 onClick={() => onClick(index)}
                 selected={index === selected}
                 goal={sb.isGoalSquare(index)}
-                key={index} />
+                key={index}
+                glow={collectable.includes(index)} />
       );
     }
     rows.push(

@@ -72,6 +72,31 @@
   border-style: inset;
 }
 
+.glow.purple {
+  box-shadow: 0 0 2px 5px rgba(190, 0, 255, 0.8);
+  position: relative;
+}
+
+.glow.blue {
+  box-shadow: 0 0 2px 5px rgba(0, 50, 255, 0.8);
+  position: relative;
+}
+
+.glow.yellow {
+  box-shadow: 0 0 2px 5px rgba(200, 200, 0, 0.8);
+  position: relative;
+}
+
+.glow.red {
+  box-shadow: 0 0 2px 5px rgba(200, 0, 0, 0.8);
+  position: relative;
+}
+
+.glow.green {
+  box-shadow: 0 0 2px 5px rgba(0, 200, 0, 0.8);
+  position: relative;
+}
+
 @media (max-width: 1000px) {
   .square {
     border-width: 5px;
