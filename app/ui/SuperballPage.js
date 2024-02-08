@@ -19,9 +19,11 @@ export default function SuperballPage({onHelpClick}) {
   const [colors, setColors] = useState(firstBoard);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
   const [animating, setAnimating] = useState(false);
   const [glowHighScore, setGlowHighScore] = useState(false);
   const [lbModalShown, setLbModalShown] = useState(false);
+  const [newGameModalShown, setNewGameModalShown] = useState(false);
 
   const collectable = sb.collectable(colors, selected);
 
@@ -31,16 +33,21 @@ export default function SuperballPage({onHelpClick}) {
     localStorage.setItem('highScore', 0);
   }
 
+  function newGame() {
+    setScore(0);
+    setGameOver(false);
+    setGameStarted(false);
+    setGlowHighScore(false);
+    const newBoard = Array(80).fill('-');
+    sb.addColors(newBoard, 5);
+    setColors(newBoard);
+  }
+
   function handleCollectClick() {
     if (animating) return;
 
     if (gameOver) {
-      setScore(0);
-      setGameOver(false);
-      setGlowHighScore(false);
-      const newBoard = Array(80).fill('-');
-      sb.addColors(newBoard, 5);
-      setColors(newBoard);
+      newGame();
       return;
     }
 
@@ -77,6 +84,7 @@ export default function SuperballPage({onHelpClick}) {
       setColors(newColors);
       setAnimating(true);
       setSelected(-1);
+      setGameStarted(true);
 
       // generate new colors later
       setTimeout(() => {
@@ -109,19 +117,33 @@ export default function SuperballPage({onHelpClick}) {
     setLbModalShown(!lbModalShown);
   }
 
+  function handleNewGameClick() {
+    setNewGameModalShown(!newGameModalShown);
+  }
+
   return (
     <div style={{height:'100vh', width:'100vw'}} onClick={handleOtherClick}>
       {lbModalShown && <Modal onClose={handleLbClick}>
         <Leaderboards />
       </Modal>}
+      {newGameModalShown && <Modal onClose={handleNewGameClick}>
+        <h1>Start over?</h1>
+        <div className={styles.startOverButtonContainer}>
+          <button className={styles.modalButton + ' ' + styles.danger} onClick={() => {newGame(); handleNewGameClick();}}>Yes</button>
+          <button className={styles.modalButton} onClick={handleNewGameClick}>No</button>
+        </div>
+      </Modal>}
       <h1 style={{textAlign: 'center'}}>
         Superball
         <button className={styles.iconButton} onClick={e => {e.stopPropagation(); onHelpClick();}}>
-          <i style={{fontSize: '22px'}} className="fa-solid fa-circle-info"></i>
+          <i style={{fontSize: '22px'}} className="fa-regular fa-circle-question"></i>
         </button>
-        <button className={styles.iconButton} onClick={e => {e.stopPropagation(); handleLbClick();}}>
+        {gameStarted && <button className={styles.iconButton} onClick={e => {e.stopPropagation(); handleNewGameClick();}}>
+          <i style={{fontSize: '22px'}} className="fa-solid fa-arrows-rotate"></i>
+        </button>}
+        {/* <button className={styles.iconButton} onClick={e => {e.stopPropagation(); handleLbClick();}}>
           <i style={{fontSize: '22px'}} className="fa-solid fa-trophy"></i>
-        </button>
+        </button> */}
       </h1>
       <Superball
         handleSquareClick={handleSquareClick}
