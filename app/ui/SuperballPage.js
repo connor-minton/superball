@@ -11,15 +11,27 @@ import styles from './SuperballPage.module.css';
 
 import confetti from 'canvas-confetti';
 
-const firstBoard = Array(80).fill('-');
-sb.addColors(firstBoard, 5);
-
 export default function SuperballPage({onHelpClick}) {
+  let firstScore = 0;
+  let firstBoard;
+  let firstGameStarted = false;
+
+  // if player has a saved game
+  if (localStorage.getItem('colors')) {
+    firstBoard = JSON.parse(localStorage.getItem('colors'));
+    firstScore = Number.parseInt(localStorage.getItem('score')) || 0;
+    firstGameStarted = true;
+  }
+  else {
+    firstBoard = Array(80).fill('-');
+    sb.addColors(firstBoard, 5);
+  }
+
   const [selected, setSelected] = useState(-1);
   const [colors, setColors] = useState(firstBoard);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState(firstScore);
   const [gameOver, setGameOver] = useState(false);
-  const [gameStarted, setGameStarted] = useState(false);
+  const [gameStarted, setGameStarted] = useState(firstGameStarted);
   const [animating, setAnimating] = useState(false);
   const [glowHighScore, setGlowHighScore] = useState(false);
   const [lbModalShown, setLbModalShown] = useState(false);
@@ -41,6 +53,8 @@ export default function SuperballPage({onHelpClick}) {
     const newBoard = Array(80).fill('-');
     sb.addColors(newBoard, 5);
     setColors(newBoard);
+    localStorage.removeItem('colors');
+    localStorage.removeItem('score');
   }
 
   function handleCollectClick() {
@@ -51,7 +65,8 @@ export default function SuperballPage({onHelpClick}) {
       return;
     }
 
-    setScore(score + collectable.length * sb.colorPoints(colors[selected]));
+    let newScore = score + collectable.length * sb.colorPoints(colors[selected]);
+    setScore(newScore);
     const newColors = colors.slice();
     for (let square of collectable) {
       newColors[square] = '-';
@@ -65,6 +80,8 @@ export default function SuperballPage({onHelpClick}) {
       const newNewColors = newColors.slice();
       sb.addColors(newNewColors, 3);
       setColors(newNewColors);
+      localStorage.setItem('colors', JSON.stringify(newNewColors));
+      localStorage.setItem('score', newScore);
     }, 500);
   }
 
@@ -105,6 +122,12 @@ export default function SuperballPage({onHelpClick}) {
         }
         setAnimating(false);
         setColors(newNewColors);
+        if (couldAdd)
+          localStorage.setItem('colors', JSON.stringify(newNewColors));
+        else {
+          localStorage.removeItem('colors');
+          localStorage.removeItem('score');
+        }
       }, 500);
     }
   }
