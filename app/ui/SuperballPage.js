@@ -4,7 +4,7 @@ import Superball from './Superball';
 import Modal from './Modal';
 import Leaderboards from './Leaderboards';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as sb from '../lib/superball';
 
 import styles from './SuperballPage.module.css';
@@ -36,6 +36,7 @@ export default function SuperballPage({onHelpClick}) {
   const [glowHighScore, setGlowHighScore] = useState(false);
   const [lbModalShown, setLbModalShown] = useState(false);
   const [newGameModalShown, setNewGameModalShown] = useState(false);
+  const [lbScoreSubmitted, setLbScoreSubmitted] = useState(false);
 
   const collectable = sb.collectable(colors, selected);
 
@@ -45,10 +46,63 @@ export default function SuperballPage({onHelpClick}) {
     localStorage.setItem('highScore', 0);
   }
 
+  useEffect(() => {
+    if (gameOver && !lbScoreSubmitted && !lbModalShown) {
+      let ignore = false;
+
+      // check if score beats any leaderboard scores
+      fetch(process.env.NEXT_PUBLIC_API_ENDPOINT + '/leaderboards')
+        .then(data => data.json())
+        .then(data => {
+          if (ignore) return;
+
+          let highScore = false;
+          const username = localStorage.getItem('username');
+          // first check if player already has a score on the leaderboard
+          let playerEntry = data.find(e => e.name === username);
+          if (playerEntry && score > playerEntry.score)
+            highScore = true;
+          else if (!playerEntry && data.length < 5)
+            highScore = true;
+          else if (!playerEntry)
+            highScore = (data.findIndex(e => score > e.score) > -1);
+
+          if (highScore && !username) {
+            setTimeout(() => {
+              setLbModalShown(true);
+            }, 2000);
+          }
+          else if (highScore) {
+            return submitHighScore(username, score);
+          }
+        })
+          .catch(() => {});
+
+      return () => { ignore = true; };
+    }
+  }, [lbModalShown, lbScoreSubmitted, gameOver]);
+
+  function submitHighScore(username, score) {
+    return fetch(process.env.NEXT_PUBLIC_API_ENDPOINT + '/leaderboards', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: username,
+        score: score
+      })
+    })
+      .then(() => {
+        setLbScoreSubmitted(true);
+      });
+  }
+
   function newGame() {
     setScore(0);
     setGameOver(false);
     setGameStarted(false);
+    setLbScoreSubmitted(false);
     setGlowHighScore(false);
     const newBoard = Array(80).fill('-');
     sb.addColors(newBoard, 5);
@@ -119,6 +173,7 @@ export default function SuperballPage({onHelpClick}) {
             });
             setGlowHighScore(true);
           }
+
         }
         setAnimating(false);
         setColors(newNewColors);
@@ -144,10 +199,14 @@ export default function SuperballPage({onHelpClick}) {
     setNewGameModalShown(!newGameModalShown);
   }
 
+  function handleScoreSubmitted() {
+    setLbScoreSubmitted(true);
+  }
+
   return (
     <div style={{height:'100vh', width:'100vw'}} onClick={handleOtherClick}>
       {lbModalShown && <Modal onClose={handleLbClick}>
-        <Leaderboards />
+        <Leaderboards score={score} submitted={lbScoreSubmitted} onSubmit={handleScoreSubmitted} />
       </Modal>}
       {newGameModalShown && <Modal onClose={handleNewGameClick}>
         <h1>Start over?</h1>
@@ -164,9 +223,9 @@ export default function SuperballPage({onHelpClick}) {
         {gameStarted && <button className={styles.iconButton} onClick={e => {e.stopPropagation(); handleNewGameClick();}}>
           <i style={{fontSize: '22px'}} className="fa-solid fa-arrows-rotate"></i>
         </button>}
-        {/* <button className={styles.iconButton} onClick={e => {e.stopPropagation(); handleLbClick();}}>
+        <button className={styles.iconButton} onClick={e => {e.stopPropagation(); handleLbClick();}}>
           <i style={{fontSize: '22px'}} className="fa-solid fa-trophy"></i>
-        </button> */}
+        </button>
       </h1>
       <Superball
         handleSquareClick={handleSquareClick}
