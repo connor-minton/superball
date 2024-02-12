@@ -38,6 +38,7 @@ export default function SuperballPage({onHelpClick}) {
   const [newGameModalShown, setNewGameModalShown] = useState(false);
   const [lbScoreSubmitted, setLbScoreSubmitted] = useState(false);
   const [shouldNagLeaderboard, setShouldNagLeaderboard] = useState(false);
+  const [naggedLeaderboard, setNaggedLeaderboard] = useState(false);
 
   if (shouldNagLeaderboard && gameOver) {
     setShouldNagLeaderboard(false);
@@ -83,7 +84,8 @@ export default function SuperballPage({onHelpClick}) {
           else if (!playerEntry)
             highScore = (data.findIndex(e => score > e.score) > -1);
 
-          if (highScore && !username) {
+          if (highScore && !username && !naggedLeaderboard) {
+            setNaggedLeaderboard(true);
             setTimeout(() => {
               setShouldNagLeaderboard(true);
             }, 2000);
