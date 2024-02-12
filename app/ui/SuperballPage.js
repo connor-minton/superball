@@ -37,6 +37,15 @@ export default function SuperballPage({onHelpClick}) {
   const [lbModalShown, setLbModalShown] = useState(false);
   const [newGameModalShown, setNewGameModalShown] = useState(false);
   const [lbScoreSubmitted, setLbScoreSubmitted] = useState(false);
+  const [shouldNagLeaderboard, setShouldNagLeaderboard] = useState(false);
+
+  if (shouldNagLeaderboard && gameOver) {
+    setShouldNagLeaderboard(false);
+    setLbModalShown(true);
+  }
+  else if (shouldNagLeaderboard) {
+    setShouldNagLeaderboard(false);
+  }
 
   const collectable = sb.collectable(colors, selected);
 
@@ -46,6 +55,13 @@ export default function SuperballPage({onHelpClick}) {
     localStorage.setItem('highScore', 0);
   }
 
+  // wake up the API lol
+  useEffect(() => {
+    fetch(process.env.NEXT_PUBLIC_API_ENDPOINT + '/leaderboards')
+      .catch(() => {});
+  }, []);
+
+  // leaderboard submit score logic
   useEffect(() => {
     if (gameOver && !lbScoreSubmitted && !lbModalShown) {
       let ignore = false;
@@ -69,7 +85,7 @@ export default function SuperballPage({onHelpClick}) {
 
           if (highScore && !username) {
             setTimeout(() => {
-              setLbModalShown(true);
+              setShouldNagLeaderboard(true);
             }, 2000);
           }
           else if (highScore) {

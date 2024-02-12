@@ -6,6 +6,8 @@
   border-left: none;
   border-right: none;
   text-align: center;
+  max-width: 300px;
+  width: 80%;
 }
 
 .container {

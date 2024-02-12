@@ -17,6 +17,9 @@ export default function Leaderboards() {
           setScores(data);
           setLoading(false);
         }
+      })
+      .catch(err => {
+        setLoading(false);
       });
 
     return () => { ignore = true; };
@@ -31,7 +34,10 @@ export default function Leaderboards() {
     <>
       <h1>Leaderboards</h1>
       {username && <p>Welcome back, {username}.</p>}
-      {loading && <p>Loading...</p>}
+      {loading && <p>This might take a while because I'm too cheap to buy a server.</p>}
+      {loading && <div style={{display:'flex',justifyContent:'center'}}>
+        <div className="loader"></div>
+      </div>}
       {username
         ? <LeaderboardsTable scores={scores} />
         : <LeaderboardsEnterName onEnterName={handleEnterName} />}

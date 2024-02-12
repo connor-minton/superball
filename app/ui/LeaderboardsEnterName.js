@@ -68,6 +68,11 @@ export default function LeaderboardsEnterName({onEnterName}) {
       <p>Enter a name to use for the leaderboards. You can only do this once.</p>
       {(alreadyExists && alreadyExists === username) &&
       <p>This name already exists. Press enter to use it anyway.</p>}
+      {loading && <p>This might take a while because I'm too cheap to buy a server.</p>}
+      {loading &&
+      <div style={{display:'flex',justifyContent:'center'}}>
+        <div className="loader"></div>
+      </div>}
       {error &&
       <p style={{color: 'red'}}>{error}</p>}
       <form>
